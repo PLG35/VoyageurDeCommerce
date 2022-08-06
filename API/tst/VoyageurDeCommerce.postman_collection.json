@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "021b518c-8cb2-4548-bdd4-f54d503a798f",
+		"name": "MyVoyageurDeCommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10852541"
+	},
+	"item": [
+		{
+			"name": "Valid Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var code = pm.response.code\r",
+							"var body = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Error code\", function(){\r",
+							"    pm.expect(code).equal(200)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content\", function(){\r",
+							"    pm.expect(body).haveOwnProperty(\"villes\");\r",
+							"    pm.expect(body).haveOwnProperty(\"timingFirstGuess\");\r",
+							"    pm.expect(body).haveOwnProperty(\"firstGuess\");\r",
+							"    pm.expect(body).haveOwnProperty(\"lengthFirstGuess\");\r",
+							"    pm.expect(body).haveOwnProperty(\"timeOfExploration\");\r",
+							"    pm.expect(body).haveOwnProperty(\"optimum\");\r",
+							"    pm.expect(body).haveOwnProperty(\"lengthOptimum\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "villes",
+							"value": "{{villes}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{server}}:{{port}}/api/v1.0/optimize",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"v1.0",
+						"optimize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid entrypoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var code = pm.response.code\r",
+							"var body = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Error code\", function(){\r",
+							"    pm.expect(code).equal(400)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content\", function(){\r",
+							"    pm.expect(body).haveOwnProperty(\"message\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{server}}:{{port}}/api/v1.0/test",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"v1.0",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid parameters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var code = pm.response.code\r",
+							"var body = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Error code\", function(){\r",
+							"    pm.expect(code).equal(400)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content\", function(){\r",
+							"    pm.expect(body).haveOwnProperty(\"message\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{server}}:{{port}}/api/v1.0/optimize?ville={{villes}}",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"v1.0",
+						"optimize"
+					],
+					"query": [
+						{
+							"key": "ville",
+							"value": "{{villes}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "12345",
+			"type": "string"
+		},
+		{
+			"key": "villes",
+			"value": "[[1,3],[2,4],[9,5],[6,7],[8,0],[4.5,5.5]]",
+			"type": "string"
+		}
+	]
+}

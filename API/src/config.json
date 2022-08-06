@@ -1,0 +1,4 @@
+{
+    "apiVersion" : "api/v1.0",
+    "apiPort" : 12345
+}
