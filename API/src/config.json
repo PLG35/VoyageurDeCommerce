@@ -1,4 +1,6 @@
 {
     "apiVersion" : "api/v1.0",
-    "apiPort" : 12345
+    "apiPort" : 12345,
+    "limitNumberOfVilles" : 8,
+    "logPath" : "mylog.json"
 }

@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Valid Request",
+			"name": "Valid request",
 			"event": [
 				{
 					"listen": "test",
@@ -64,6 +64,65 @@
 			"response": []
 		},
 		{
+			"name": "Invalid request method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var code = pm.response.code\r",
+							"var body = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Error code\", function(){\r",
+							"    pm.expect(code).equal(400)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content\", function(){\r",
+							"    pm.expect(body).haveOwnProperty(\"message\");\r",
+							"    pm.expect(body).haveOwnProperty(\"errorID\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error ID\", function(){\r",
+							"    pm.expect(body[\"errorID\"]).equal(\"0001\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "villes",
+							"value": "{{villes}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{server}}:{{port}}/api/v1.0/optimize",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"v1.0",
+						"optimize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Invalid entrypoint",
 			"event": [
 				{
@@ -79,6 +138,11 @@
 							"\r",
 							"pm.test(\"Content\", function(){\r",
 							"    pm.expect(body).haveOwnProperty(\"message\");\r",
+							"    pm.expect(body).haveOwnProperty(\"errorID\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error ID\", function(){\r",
+							"    pm.expect(body[\"errorID\"]).equal(\"0002\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -120,6 +184,11 @@
 							"\r",
 							"pm.test(\"Content\", function(){\r",
 							"    pm.expect(body).haveOwnProperty(\"message\");\r",
+							"    pm.expect(body).haveOwnProperty(\"errorID\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error ID\", function(){\r",
+							"    pm.expect(body[\"errorID\"]).equal(\"0010\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -146,6 +215,62 @@
 							"key": "ville",
 							"value": "{{villes}}"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid parameters format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var code = pm.response.code\r",
+							"var body = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Error code\", function(){\r",
+							"    pm.expect(code).equal(400)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content\", function(){\r",
+							"    pm.expect(body).haveOwnProperty(\"message\");\r",
+							"    pm.expect(body).haveOwnProperty(\"errorID\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error ID\", function(){\r",
+							"    pm.expect(body[\"errorID\"]).equal(\"0020\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "villes",
+							"value": "{{villes}}+}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{server}}:{{port}}/api/v1.0/optimize",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"v1.0",
+						"optimize"
 					]
 				}
 			},
